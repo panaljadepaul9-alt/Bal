@@ -1,274 +1,342 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>One Question For You 💜</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
+  <title>One Question For You 💜</title>
+
+  <style>
     * {
-        box-sizing: border-box;
+      box-sizing: border-box;
     }
 
     body {
-        margin: 0;
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: "Poppins", Arial, sans-serif;
-        background: linear-gradient(135deg, #eadcff, #f7efff, #dfc5ff);
-        overflow-x: hidden;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ead7ff, #f9efff, #d8b4fe);
+      overflow: hidden;
     }
 
-    .container {
-        width: 90%;
-        max-width: 500px;
-        background: rgba(255,255,255,0.92);
-        padding: 35px 25px;
-        border-radius: 25px;
-        text-align: center;
-        box-shadow: 0 15px 40px rgba(80, 30, 120, 0.2);
-    }
-
-    h1 {
-        color: #7b2cbf;
-        font-size: 30px;
-        margin-bottom: 15px;
-    }
-
-    .question {
-        color: #444;
-        font-size: 19px;
-        line-height: 1.6;
-    }
-
-    .buttons {
-        margin-top: 25px;
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-    }
-
-    button {
-        border: none;
-        padding: 13px 30px;
-        border-radius: 30px;
-        font-size: 17px;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    #yes {
-        background: #8e44ad;
-        color: white;
-    }
-
-    #yes:hover {
-        transform: scale(1.08);
-        background: #732d91;
-    }
-
-    #no {
-        background: #eee;
-        color: #555;
-    }
-
-    #no:hover {
-        transform: scale(1.05);
-    }
-
-    #answer {
-        display: none;
-        margin-top: 25px;
-        animation: fadeIn 1.2s ease;
-    }
-
-    .bouquet {
-        font-size: 75px;
-        margin-bottom: 15px;
-        animation: float 2s infinite ease-in-out;
-    }
-
-    .message {
-        color: #4b245f;
-        font-size: 16px;
-        line-height: 1.8;
-        text-align: left;
-    }
-
-    .no-message {
-        display: none;
-        margin-top: 25px;
-        color: #555;
-        line-height: 1.7;
-        animation: fadeIn 0.8s ease;
+    .card {
+      width: 90%;
+      max-width: 450px;
+      padding: 35px 25px;
+      text-align: center;
+      background: rgba(255,255,255,0.92);
+      border-radius: 25px;
+      box-shadow: 0 15px 50px rgba(80,30,100,0.25);
+      z-index: 5;
     }
 
     .heart {
-        position: fixed;
-        color: #b56cff;
-        font-size: 20px;
-        animation: fall 5s linear forwards;
-        pointer-events: none;
+      font-size: 65px;
+      animation: heartbeat 1.2s infinite;
     }
 
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    @keyframes heartbeat {
+      0%, 100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.18);
+      }
     }
 
-    @keyframes float {
-        0%, 100% {
-            transform: translateY(0);
-        }
-        50% {
-            transform: translateY(-10px);
-        }
+    h1 {
+      color: #7b2cbf;
+      margin: 15px 0;
+      font-size: 30px;
+    }
+
+    p {
+      color: #555;
+      line-height: 1.6;
+      font-size: 17px;
+    }
+
+    .buttons {
+      margin-top: 25px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    button {
+      border: none;
+      border-radius: 30px;
+      padding: 14px 30px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #yesBtn {
+      background: #8e44ad;
+      color: white;
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.08);
+    }
+
+    #noBtn {
+      background: #eeeeee;
+      color: #555;
+      transition: 0.2s;
+    }
+
+    #success {
+      display: none;
+    }
+
+    #success h2 {
+      color: #8e44ad;
+      font-size: 30px;
+    }
+
+    .bouquet {
+      font-size: 80px;
+      margin: 15px;
+      animation: floating 2s infinite ease-in-out;
+    }
+
+    @keyframes floating {
+      0%,100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .confetti {
+      position: fixed;
+      top: -20px;
+      width: 10px;
+      height: 10px;
+      animation: fall 3s linear forwards;
+      z-index: 20;
     }
 
     @keyframes fall {
-        0% {
-            transform: translateY(-50px) rotate(0deg);
-            opacity: 1;
-        }
-        100% {
-            transform: translateY(100vh) rotate(360deg);
-            opacity: 0;
-        }
+      to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+      }
     }
-</style>
+
+    .floating-heart {
+      position: fixed;
+      bottom: -40px;
+      font-size: 25px;
+      animation: rise 5s linear forwards;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes rise {
+      to {
+        transform: translateY(-110vh);
+        opacity: 0;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="container">
+  <div class="card">
 
-    <div id="questionBox">
-        <h1>💜 I Have A Question For You 💜</h1>
+    <!-- QUESTION -->
+    <div id="question">
 
-        <p class="question">
-            I've been wanting to ask you something for a while...<br><br>
-            Would you like to be my girlfriend? 🥺💜
-        </p>
+      <div class="heart">💜</div>
+
+      <h1>Will You Be My Girlfriend?</h1>
+
+      <p>
+        There's something I've been wanting to ask you...
+        <br><br>
+
+        I really like you, and I would love to have the chance
+        to make more memories with you. 💜
+        <br><br>
+
+        So... will you be my girlfriend?
+      </p>
+
+      <form
+        id="loveForm"
+        action="https://formspree.io/f/mnpaweqr"
+        method="POST"
+      >
+
+        <input
+          type="hidden"
+          name="answer"
+          value="YES 💜"
+        >
+
+        <input
+          type="hidden"
+          name="message"
+          value="She clicked YES! 💜 She agreed to be your girlfriend!"
+        >
 
         <div class="buttons">
-            <button id="yes" onclick="sayYes()">YES 💜</button>
-            <button id="no" onclick="sayNo()">NO</button>
+
+          <button type="submit" id="yesBtn">
+            YES 💜
+          </button>
+
+          <button type="button" id="noBtn">
+            NO
+          </button>
+
         </div>
+
+      </form>
+
     </div>
 
-    <div id="answer">
 
-        <div class="bouquet">
-            💜💐💜
-        </div>
+    <!-- SUCCESS MESSAGE -->
+    <div id="success">
 
-        <h1>She Said YES! 🥹💜</h1>
+      <div class="bouquet">
+        💐
+      </div>
 
-        <div class="message">
-            <p>
-                Honestly, I don't even know where to start because
-                I'm really happy right now. 🥹💜
-            </p>
+      <h2>She Said YES! 💜</h2>
 
-            <p>
-                I just want you to know that asking you this wasn't
-                something I did just for fun. I genuinely like you,
-                and I really appreciate every little moment we share.
-                Your presence makes ordinary days feel a little more
-                special.
-            </p>
+      <p>
+        You have no idea how happy I am right now. 🥹💜
+        <br><br>
 
-            <p>
-                I don't promise that everything will always be perfect,
-                but I promise that I'll always try my best to understand
-                you, respect you, listen to you, and appreciate you for
-                who you are.
-            </p>
+        Thank you for giving me a chance.
+        I promise to appreciate you, respect you,
+        listen to you, and treasure the moments
+        we get to share.
+        <br><br>
 
-            <p>
-                I hope we can make lots of happy memories together,
-                laugh about random things, support each other, and
-                continue getting to know each other better.
-            </p>
+        I'm really happy that you chose YES. 💜
+        <br><br>
 
-            <p>
-                Thank you for giving me a chance. You have no idea how
-                much this means to me. 💜
-            </p>
+        Let's make beautiful memories together. ✨
+      </p>
 
-            <p>
-                So from this moment... I guess I can finally say:
-                <br><br>
-                <strong>
-                    I'm really happy that you're my girlfriend. 💜🥹
-                </strong>
-            </p>
-
-            <p style="text-align:center; font-size:20px;">
-                💜🌸💐🌷💜
-            </p>
-        </div>
     </div>
 
-    <div id="noMessage" class="no-message">
-        <h2>It's okay 💜</h2>
-        <p>
-            Thank you for being honest with me. I respect your answer,
-            and I hope we can still keep things comfortable between us.
-            No pressure at all. 😊
-        </p>
-    </div>
+  </div>
 
-</div>
 
-<script>
+  <script>
 
-function sayYes() {
+    const form = document.getElementById("loveForm");
+    const question = document.getElementById("question");
+    const success = document.getElementById("success");
+    const noBtn = document.getElementById("noBtn");
 
-    document.getElementById("questionBox").style.display = "none";
-    document.getElementById("answer").style.display = "block";
 
-    // Purple flower/heart animation
-    for (let i = 0; i < 35; i++) {
-        setTimeout(createHeart, i * 100);
+    // Playful NO button
+    noBtn.addEventListener("click", function () {
+
+      const x = Math.random() * 220 - 110;
+      const y = Math.random() * 180 - 90;
+
+      noBtn.style.transform =
+        `translate(${x}px, ${y}px)`;
+
+    });
+
+
+    // YES button
+    form.addEventListener("submit", function () {
+
+      question.style.display = "none";
+      success.style.display = "block";
+
+      createConfetti();
+      createHearts();
+
+    });
+
+
+    // Confetti
+    function createConfetti() {
+
+      const colors = [
+        "#8e44ad",
+        "#c77dff",
+        "#e0aaff",
+        "#ffb3ef",
+        "#ffffff"
+      ];
+
+      for (let i = 0; i < 120; i++) {
+
+        const confetti =
+          document.createElement("div");
+
+        confetti.className = "confetti";
+
+        confetti.style.left =
+          Math.random() * 100 + "vw";
+
+        confetti.style.background =
+          colors[
+            Math.floor(Math.random() * colors.length)
+          ];
+
+        confetti.style.animationDelay =
+          Math.random() * 2 + "s";
+
+        document.body.appendChild(confetti);
+
+        setTimeout(() => {
+          confetti.remove();
+        }, 5000);
+
+      }
     }
-}
 
-function sayNo() {
 
-    document.getElementById("questionBox").style.display = "none";
-    document.getElementById("noMessage").style.display = "block";
-}
+    // Floating hearts
+    function createHearts() {
 
-function createHeart() {
+      setInterval(() => {
 
-    const heart = document.createElement("div");
+        const heart =
+          document.createElement("div");
 
-    const flowers = ["💜", "🌸", "💜", "🌷", "💜"];
+        heart.className = "floating-heart";
 
-    heart.className = "heart";
-    heart.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
+        heart.innerHTML = "💜";
 
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (15 + Math.random() * 25) + "px";
-    heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+        heart.style.left =
+          Math.random() * 100 + "vw";
 
-    document.body.appendChild(heart);
+        heart.style.animationDuration =
+          (4 + Math.random() * 4) + "s";
 
-    setTimeout(() => {
-        heart.remove();
-    }, 6000);
-}
+        document.body.appendChild(heart);
 
-</script>
+        setTimeout(() => {
+          heart.remove();
+        }, 6000);
+
+      }, 500);
+
+    }
+
+  </script>
 
 </body>
-  </html>
+</html>
